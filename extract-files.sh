@@ -18,8 +18,8 @@
 
 set -e
 
-DEVICE=cheeseburger
-VENDOR=oneplus
+DEVICE=nash
+VENDOR=motorola
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"

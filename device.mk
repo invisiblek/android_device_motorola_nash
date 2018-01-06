@@ -22,7 +22,7 @@
 # definition file).
 #
 
-$(call inherit-product, vendor/oneplus/cheeseburger/cheeseburger-vendor.mk)
+$(call inherit-product, vendor/motorola/nash/nash-vendor.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -174,16 +174,6 @@ PRODUCT_PACKAGES += \
     qdcm_calib_data_samsung_s6e3fa5_1080p_cmd_mode_dsi_panel.xml \
     qdcm_calib_data_samsung_s6e3fa6_1080p_cmd_mode_dsi_panel.xml
 
-
-# Doze mode
-PRODUCT_PACKAGES += \
-    OneplusDoze
-
-# Fingerprint sensor
-PRODUCT_PACKAGES += \
-    fingerprintd \
-    OneplusPocketMode
-
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
     fs_config_files
@@ -302,10 +292,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/init.qcom.uicc.sh:system/etc/init.qcom.uicc.sh \
     $(LOCAL_PATH)/rootdir/etc/init.qcom.wifi.sh:system/etc/init.qcom.wifi.sh
 
-# Recovery
-PRODUCT_PACKAGES += \
-    librecovery_updater_cheeseburger
-
 # RIL
 PRODUCT_PACKAGES += \
     librmnetctl \
@@ -336,6 +322,3 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
-
-# Inherit from oppo-common
-$(call inherit-product, device/oppo/common/common.mk)

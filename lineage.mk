@@ -18,26 +18,20 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Inherit from cheeseburger device
-$(call inherit-product, device/oneplus/cheeseburger/device.mk)
+# Inherit from nash device
+$(call inherit-product, device/motorola/nash/device.mk)
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
-PRODUCT_NAME := lineage_cheeseburger
-PRODUCT_DEVICE := cheeseburger
-PRODUCT_MANUFACTURER := OnePlus
-PRODUCT_BRAND := OnePlus
-PRODUCT_MODEL := ONEPLUS A5000
-
-PRODUCT_GMS_CLIENTID_BASE := android-oneplus
-
-TARGET_VENDOR_PRODUCT_NAME := OnePlus5
-TARGET_VENDOR_DEVICE_NAME := OnePlus5
-
-PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=OnePlus5 PRODUCT_NAME=OnePlus5
+PRODUCT_NAME := lineage_nash
+PRODUCT_DEVICE := nash
+PRODUCT_MANUFACTURER := Motorola
+PRODUCT_BRAND := Motorola
+PRODUCT_MODEL := Motorola Z2 Force
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BUILD_FINGERPRINT=OnePlus/OnePlus5/OnePlus5:7.1.1/NMF26X/10061059:user/release-keys
+    BUILD_FINGERPRINT=motorola/nash_tmo_c/nash:7.1.1/NCX26.122-59-8/8:user/release-keys \
+    PRIVATE_BUILD_DESC="nash_tmo_c-user 7.1.1 NCX26.122-59-8 8 release-keys"
 
-TARGET_VENDOR := oneplus
+TARGET_VENDOR := motorola

@@ -17,8 +17,8 @@
 
 set -e
 
-DEVICE=cheeseburger
-VENDOR=oneplus
+DEVICE=nash
+VENDOR=motorola
 
 INITIAL_COPYRIGHT_YEAR=2017
 

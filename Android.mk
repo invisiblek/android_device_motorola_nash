@@ -27,7 +27,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),cheeseburger)
+ifeq ($(TARGET_DEVICE),nash)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 

@@ -22,18 +22,14 @@
 # definition file).
 #
 
-# Inherit from oppo-common
--include device/oppo/common/BoardConfigCommon.mk
-
-PLATFORM_PATH := device/oneplus/cheeseburger
+PLATFORM_PATH := device/motorola/nash
 
 TARGET_SPECIFIC_HEADER_PATH := $(PLATFORM_PATH)/include
 
-BOARD_VENDOR := oneplus
+BOARD_VENDOR := motorola
 
 # Assertions
-TARGET_BOARD_INFO_FILE ?= $(PLATFORM_PATH)/board-info.txt
-TARGET_OTA_ASSERT_DEVICE := cheeseburger
+TARGET_OTA_ASSERT_DEVICE := nash
 
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
@@ -75,8 +71,8 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_APPEND_DTB := true
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/oneplus/msm8998
-TARGET_KERNEL_CONFIG := lineage_cheeseburger_defconfig
+TARGET_KERNEL_SOURCE := kernel/motorola/msm8998
+TARGET_KERNEL_CONFIG := lineage_nash_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
 # QCOM hardware
@@ -230,17 +226,9 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 32212254720
 BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_USERIMAGES_USE_EXT4 := true
 
-# Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
-
 # Recovery
 TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/recovery.fstab
-TARGET_RECOVERY_UI_LIB := librecovery_ui_msm
 BOARD_HAS_LARGE_FILESYSTEM := true
-
-# Releasetools
-TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_cheeseburger
-TARGET_RELEASETOOLS_EXTENSIONS := $(PLATFORM_PATH)
 
 # RIL
 TARGET_RIL_VARIANT := caf
@@ -272,4 +260,4 @@ WIFI_DRIVER_MODULE_NAME := "wlan"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # inherit from the proprietary version
--include vendor/oneplus/cheeseburger/BoardConfigVendor.mk
+-include vendor/motorola/nash/BoardConfigVendor.mk
