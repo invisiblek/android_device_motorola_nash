@@ -14,9 +14,6 @@
 # limitations under the License.
 #
 
-# Get the prebuilt list of APNs
-$(call inherit-product, vendor/omni/config/gsm.mk)
-
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
@@ -24,7 +21,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Inherit from our custom product configuration
-$(call inherit-product, vendor/omni/config/common.mk)
+$(call inherit-product, vendor/cm/config/common.mk)
+$(call inherit-product, vendor/cm/config/twrp.mk)
+
 
 PRODUCT_PACKAGES += \
     charger_res_images \
@@ -36,7 +35,7 @@ PRODUCT_COPY_FILES += \
 	bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
 
 PRODUCT_DEVICE := nash
-PRODUCT_NAME := omni_nash
+PRODUCT_NAME := lineage_nash
 PRODUCT_BRAND := motorola
 PRODUCT_MODEL := Moto Z (2)
 PRODUCT_MANUFACTURER := Motorola
