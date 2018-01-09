@@ -24,8 +24,6 @@
 
 PLATFORM_PATH := device/motorola/nash
 
-TARGET_SPECIFIC_HEADER_PATH := $(PLATFORM_PATH)/include
-
 BOARD_VENDOR := motorola
 
 # Assertions
