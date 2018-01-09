@@ -221,7 +221,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_USERIMAGES_USE_EXT4 := true
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/recovery.fstab
+TARGET_RECOVERY_FSTAB := device/motorola/nash/rootdir/root/fstab.qcom
 BOARD_HAS_LARGE_FILESYSTEM := true
 
 # RIL
