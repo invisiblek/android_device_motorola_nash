@@ -194,8 +194,7 @@ PRODUCT_COPY_FILES += \
 
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/fpc1020.kl:system/usr/keylayout/fpc1020.kl \
-    $(LOCAL_PATH)/keylayout/synaptics.kl:system/usr/keylayout/synaptics.kl
+    $(LOCAL_PATH)/keylayout/uinput-fpc.kl:system/usr/keylayout/uinput-fpc.kl
 
 # Lights
 PRODUCT_PACKAGES += \
