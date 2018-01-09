@@ -201,8 +201,7 @@ case "$target" in
                 setprop qemu.hw.mainkeys 0
                 ;;
             *)
-                #modify by zoufeng 560 to 420
-                setprop ro.sf.lcd_density 420
+                setprop ro.sf.lcd_density 560
                 ;;
         esac
         ;;
@@ -229,8 +228,7 @@ case "$target" in
     "msm8998")
         case "$soc_hwplatform" in
             *)
-                #modify by Leo Jia 560 to 420
-                setprop ro.sf.lcd_density 420
+                setprop ro.sf.lcd_density 560
                 if [ ! -e /dev/kgsl-3d0 ]; then
                     setprop persist.sys.force_sw_gles 1
                     setprop sdm.idle_time 0
@@ -348,13 +346,7 @@ if [ "$boot_reason" = "3" ] || [ "$reboot_reason" = "true" ]; then
     if [ "$power_off_alarm_file" = "1" ]
     then
         setprop ro.alarm_boot true
-        #ifndef VENDOR_EDIT
-        #setprop debug.sf.nobootanimation 1
-        #ENDIF
-        #ifdef VENDOR_EDIT
-        setprop debug.sf.nobootanimation 0
-        #ENDIF
-
+        setprop debug.sf.nobootanimation 1
     fi
 else
     setprop ro.alarm_boot false

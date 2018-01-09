@@ -33,3 +33,4 @@ do
     sleep 0.1
     registered="`getprop sys.listeners.registered`"
 done
+

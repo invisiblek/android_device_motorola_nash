@@ -255,16 +255,13 @@ PRODUCT_PACKAGES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
+    init.mmi.usb.rc \
     init.qcom.class_core.sh \
     init.qcom.early_boot.sh \
-    init.qcom.power.rc \
     init.qcom.rc \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.syspart_fixup.sh \
-    init.qcom.usb.configfs.rc \
-    init.qcom.usb.rc \
-    init.qcom.usb.sh \
     init.target.rc \
     ueventd.qcom.rc
 

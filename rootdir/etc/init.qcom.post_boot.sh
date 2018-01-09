@@ -28,7 +28,9 @@
 
 target=`getprop ro.board.platform`
 
-function configure_memory_parameters() {
+# Motorola: We don't use this function.  Renaming it in case  QCOM
+#           adds a new call to it.
+function configure_memory_parameters_DO_NOT_CALL() {
     # Set Memory paremeters.
     #
     # Set per_process_reclaim tuning parameters
@@ -1581,7 +1583,8 @@ case "$target" in
                 # Enable timer migration to little cluster
                 echo 1 > /proc/sys/kernel/power_aware_timer_migration
                 # Set Memory parameters
-                configure_memory_parameters
+                #configure_memory_parameters
+
             ;;
             *)
 
@@ -1633,8 +1636,8 @@ case "$target" in
             # Setting b.L scheduler parameters
             echo 96 > /proc/sys/kernel/sched_upmigrate
             echo 90 > /proc/sys/kernel/sched_downmigrate
-            echo 200 > /proc/sys/kernel/sched_group_upmigrate
-            echo 180 > /proc/sys/kernel/sched_group_downmigrate
+            echo 140 > /proc/sys/kernel/sched_group_upmigrate
+            echo 120 > /proc/sys/kernel/sched_group_downmigrate
             echo 0 > /proc/sys/kernel/sched_select_prev_cpu_us
             echo 400000 > /proc/sys/kernel/sched_freq_inc_notify
             echo 400000 > /proc/sys/kernel/sched_freq_dec_notify
@@ -1701,6 +1704,8 @@ case "$target" in
             echo N > /sys/module/lpm_levels/system/perf/cpu7/ret/idle_enabled
             echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-dynret/idle_enabled
             echo N > /sys/module/lpm_levels/system/perf/perf-l2-dynret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/perf/perf-l2-ret/idle_enabled
             # enable LPM
             echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
 
@@ -1908,6 +1913,8 @@ case "$target" in
             echo "cpufreq" > /sys/class/devfreq/soc:qcom,mincpubw/governor
             ;;
         esac
+	# Log kernel wake-up source
+	echo 1 > /sys/module/msm_show_resume_irq/parameters/debug_mask
     ;;
 esac
 
@@ -2319,11 +2326,6 @@ case "$target" in
 	echo 1 > /sys/devices/system/cpu/cpu4/core_ctl/is_big_cluster
 	echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres
 
-	# Enable Adaptive LMK
-        echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
-        echo "18432,23040,27648,51256,150296,200640" > /sys/module/lowmemorykiller/parameters/minfree
-        echo 162500 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
-
 	# Setting b.L scheduler parameters
 	echo 1 > /proc/sys/kernel/sched_migration_fixup
 	echo 95 > /proc/sys/kernel/sched_upmigrate
@@ -2354,7 +2356,7 @@ case "$target" in
 	echo "83 1804800:95" > /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
 	echo 19000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time
 	echo 79000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis
-	echo 300000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+	echo 672000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 	echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/ignore_hispeed_on_notif
         # online CPU4
         echo 1 > /sys/devices/system/cpu/cpu4/online
@@ -2370,7 +2372,7 @@ case "$target" in
 	echo "83 1939200:90 2016000:95" > /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads
 	echo 19000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time
 	echo 79000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis
-	echo 300000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+	echo 345600 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
 	echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/ignore_hispeed_on_notif
 
         # re-enable thermal and BCL hotplug
@@ -2378,7 +2380,7 @@ case "$target" in
 
         # Enable input boost configuration
         echo "0:1324800" > /sys/module/cpu_boost/parameters/input_boost_freq
-        echo 100 > /sys/module/cpu_boost/parameters/input_boost_ms
+        echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
         # Enable bus-dcvs
         for cpubw in /sys/class/devfreq/*qcom,cpubw*
         do
@@ -2437,12 +2439,11 @@ case "$target" in
 					;;
 				"16")
 					if [ $platform_major_version -lt 6 ]; then
+						echo 0 > /sys/class/graphics/fb1/hpd
 						start hbtp
 					fi
 					;;
 			esac
-
-			echo 0 > /sys/class/graphics/fb1/hpd
 			;;
 		"Surf")
 			case "$platform_subtype_id" in
@@ -2475,20 +2476,12 @@ case "$target" in
 	echo N > /sys/module/lpm_levels/system/perf/perf-l2-dynret/idle_enabled
 	echo N > /sys/module/lpm_levels/system/perf/perf-l2-ret/idle_enabled
 	echo N > /sys/module/lpm_levels/parameters/sleep_disabled
-        echo 0-2 > /dev/cpuset/background/cpus
-        echo 0-5 > /dev/cpuset/system-background/cpus
+        #echo 0-3 > /dev/cpuset/background/cpus
+        #echo 0-3 > /dev/cpuset/system-background/cpus
         echo 0 > /proc/sys/kernel/sched_boost
 
-	#if [ -f "/defrag_aging.ko" ]; then
-	#	insmod /defrag_aging.ko
-	#else
-	#	insmod /system/lib/modules/defrag.ko
-	#fi
-    sleep 1
-	#lsmod | grep defrag
-	#if [ $? != 0 ]; then
-	#	echo 1 > /sys/module/defrag_helper/parameters/disable
-	#fi
+	# Log kernel wake-up source
+	echo 1 > /sys/module/msm_show_resume_irq/parameters/debug_mask
     ;;
 esac
 
