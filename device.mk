@@ -24,6 +24,9 @@
 
 $(call inherit-product, vendor/motorola/nash/nash-vendor.mk)
 
+GAPPS_VARIANT := nano
+$(call inherit-product-if-exists, vendor/opengapps/build/opengapps-packages.mk)
+
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
