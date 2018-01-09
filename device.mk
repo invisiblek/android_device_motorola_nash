@@ -158,8 +158,8 @@ PRODUCT_PACKAGES += \
     memtrack.msm8998 \
     liboverlay \
     libtinyxml \
-    qdcm_calib_data_samsung_s6e3fa5_1080p_cmd_mode_dsi_panel.xml \
-    qdcm_calib_data_samsung_s6e3fa6_1080p_cmd_mode_dsi_panel.xml
+    qdcm_calib_data_mipi_mot_cmd_smd_QHD_546_g.xml \
+    qdcm_calib_data_mipi_mot_cmd_smd_QHD_546_p.xml
 
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
