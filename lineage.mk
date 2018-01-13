@@ -24,11 +24,37 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, vendor/cm/config/common.mk)
 $(call inherit-product, vendor/cm/config/twrp.mk)
 
+# A/B updater
+AB_OTA_UPDATER := true
+
+AB_OTA_PARTITIONS += \
+    boot \
+    system
+
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_system=true \
+    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    FILESYSTEM_TYPE_system=ext4 \
+    POSTINSTALL_OPTIONAL_system=true
+
+PRODUCT_PACKAGES += \
+    otapreopt_script \
+    update_engine \
+    update_engine_sideload \
+    update_verifier
+
+# Boot control HAL
+PRODUCT_PACKAGES += \
+    bootctrl.msm8998
+
+PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+    bootctrl.msm8998 \
+    librecovery_updater_msm8998 \
+    libsparse_static
 
 PRODUCT_PACKAGES += \
     charger_res_images \
-    charger \
-    update_engine_sideload
+    charger
 
 # Time Zone data for recovery
 PRODUCT_COPY_FILES += \
