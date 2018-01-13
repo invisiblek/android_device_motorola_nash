@@ -7,9 +7,6 @@ endif
 ifeq ($(BUILD_OEM_UPDATER), true)
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
-ifeq ($(WITH_TWRP),true)
-LOCAL_CFLAGS += -DWITH_TWRP
-endif
 LOCAL_MODULE_TAGS := optional
 LOCAL_C_INCLUDES := $(call project-path-for,recovery) \
 		    system/core/libsparse \
