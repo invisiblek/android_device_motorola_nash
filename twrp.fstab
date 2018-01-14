@@ -4,3 +4,4 @@
 /data            ext4              /dev/block/bootdevice/by-name/userdata
 
 /usb-otg         vfat              /dev/block/sdg1      /dev/block/sdg              flags=removable;storage;display=USB-OTG
+/external_sd     auto              /dev/block/mmcblk0p1 /dev/block/mmcblk0          flags=display="Micro SDcard";storage;wipeingui;removable
