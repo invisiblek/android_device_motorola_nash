@@ -55,10 +55,10 @@ extern "C" {
 
 #define SLOT_ACTIVE 1
 #define SLOT_INACTIVE 2
-#define UPDATE_SLOT(pentry, guid, slot_state) ({ \
+#define UPDATE_SLOT(pentry, guid, slot_state, ab_slot_active_val) ({ \
 		memcpy(pentry, guid, TYPE_GUID_SIZE); \
 		if (slot_state == SLOT_ACTIVE)\
-			*(pentry + AB_FLAG_OFFSET) = AB_SLOT_ACTIVE_VAL; \
+			*(pentry + AB_FLAG_OFFSET) = ab_slot_active_val; \
 		else if (slot_state == SLOT_INACTIVE) \
 		*(pentry + AB_FLAG_OFFSET)  = (*(pentry + AB_FLAG_OFFSET)& \
 			~AB_PARTITION_ATTR_SLOT_ACTIVE); \
@@ -399,6 +399,7 @@ static int boot_ctl_set_active_slot_for_partitions(vector<string> part_list,
 	uint8_t *pentryB_bak = NULL;
 	struct stat st;
 	vector<string>::iterator partition_iterator;
+        uint8_t ab_slot_active_val;
 
 	for (partition_iterator = part_list.begin();
 			partition_iterator != part_list.end();
@@ -468,26 +469,31 @@ static int boot_ctl_set_active_slot_for_partitions(vector<string> part_list,
 			ALOGE("Both A & B are inactive..Aborting");
 			goto error;
 		}
+		if (!strncmp(prefix.c_str(), PTN_XBL, strlen(PTN_XBL))) {
+			ab_slot_active_val = AB_SLOT_ACTIVE_VAL_XBL;
+		} else {
+			ab_slot_active_val = AB_SLOT_ACTIVE_VAL;
+		}
 		if (!strncmp(slot_suffix_arr[slot], AB_SLOT_A_SUFFIX,
 					strlen(AB_SLOT_A_SUFFIX))){
 			//Mark A as active in primary table
-			UPDATE_SLOT(pentryA, active_guid, SLOT_ACTIVE);
+			UPDATE_SLOT(pentryA, active_guid, SLOT_ACTIVE, ab_slot_active_val);
 			//Mark A as active in backup table
-			UPDATE_SLOT(pentryA_bak, active_guid, SLOT_ACTIVE);
+			UPDATE_SLOT(pentryA_bak, active_guid, SLOT_ACTIVE, ab_slot_active_val);
 			//Mark B as inactive in primary table
-			UPDATE_SLOT(pentryB, inactive_guid, SLOT_INACTIVE);
+			UPDATE_SLOT(pentryB, inactive_guid, SLOT_INACTIVE, ab_slot_active_val);
 			//Mark B as inactive in backup table
-			UPDATE_SLOT(pentryB_bak, inactive_guid, SLOT_INACTIVE);
+			UPDATE_SLOT(pentryB_bak, inactive_guid, SLOT_INACTIVE, ab_slot_active_val);
 		} else if (!strncmp(slot_suffix_arr[slot], AB_SLOT_B_SUFFIX,
 					strlen(AB_SLOT_B_SUFFIX))){
 			//Mark B as active in primary table
-			UPDATE_SLOT(pentryB, active_guid, SLOT_ACTIVE);
+			UPDATE_SLOT(pentryB, active_guid, SLOT_ACTIVE, ab_slot_active_val);
 			//Mark B as active in backup table
-			UPDATE_SLOT(pentryB_bak, active_guid, SLOT_ACTIVE);
+			UPDATE_SLOT(pentryB_bak, active_guid, SLOT_ACTIVE, ab_slot_active_val);
 			//Mark A as inavtive in primary table
-			UPDATE_SLOT(pentryA, inactive_guid, SLOT_INACTIVE);
+			UPDATE_SLOT(pentryA, inactive_guid, SLOT_INACTIVE, ab_slot_active_val);
 			//Mark A as inactive in backup table
-			UPDATE_SLOT(pentryA_bak, inactive_guid, SLOT_INACTIVE);
+			UPDATE_SLOT(pentryA_bak, inactive_guid, SLOT_INACTIVE, ab_slot_active_val);
 		} else {
 			//Something has gone terribly terribly wrong
 			ALOGE("%s: Unknown slot suffix!", __func__);
