@@ -505,12 +505,28 @@ static int boot_ctl_set_active_slot_for_partitions(vector<string> part_list,
 						__func__);
 				goto error;
 			}
+			if (!strncmp(prefix.c_str(), PTN_XBL, strlen(PTN_XBL))) {
+				//write updated content to disk
+				if (gpt_disk_commit(diskA)) {
+					ALOGE("Failed to commit disk entry");
+					goto error;
+				}
+				gpt_disk_free(diskA);
+			}
 		}
 		if (diskB) {
 			if (gpt_disk_update_crc(diskB) != 0) {
 				ALOGE("%s: Failed to update gpt_disk crc",
 						__func__);
 				goto error;
+			}
+			if (!strncmp(prefix.c_str(), PTN_XBL, strlen(PTN_XBL))) {
+				//write updated content to disk
+				if (gpt_disk_commit(diskA)) {
+					ALOGE("Failed to commit disk entry");
+					goto error;
+				}
+				gpt_disk_free(diskA);
 			}
 		}
 	}
