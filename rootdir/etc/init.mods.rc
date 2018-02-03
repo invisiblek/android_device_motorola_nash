@@ -17,3 +17,17 @@ service gbmodinstall /vendor/bin/init.gbmods.sh
     oneshot
     disabled
 
+service moddetect /vendor/bin/init.mods.sh
+    user root
+    oneshot
+    disabled
+
+on property:sys.mod.connected=1
+    write /sys/module/greybus/holders/gb_mods/drivers/platform:muc_svc/soc:muc_svc@0/forcedetect 1
+    write /sys/module/greybus/holders/gb_mods/drivers/platform:muc_svc/soc:muc_svc@0/mods_interfaces/3/hotplug 1
+    restart moddetect    
+
+on property:sys.mod.connected=0
+    write /sys/module/greybus/holders/gb_mods/drivers/platform:muc_svc/soc:muc_svc@0/forcedetect 1
+    write /sys/module/greybus/holders/gb_mods/drivers/platform:muc_svc/soc:muc_svc@0/mods_interfaces/3/hotplug 1
+    restart moddetect
