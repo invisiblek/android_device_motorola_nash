@@ -66,7 +66,7 @@ PRODUCT_COPY_FILES += \
 
 # Time Zone data for recovery
 PRODUCT_COPY_FILES += \
-	bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
+	system/timezone/output_data/iana/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
 
 PRODUCT_DEVICE := nash
 PRODUCT_NAME := lineage_nash
