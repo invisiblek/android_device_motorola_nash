@@ -85,7 +85,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/recovery.fstab
 
 # SELinux
-BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy
+include device/qcom/sepolicy/sepolicy.mk
 
 # A/B device flags
 TARGET_NO_KERNEL := false
