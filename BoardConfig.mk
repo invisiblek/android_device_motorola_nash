@@ -89,9 +89,9 @@ include device/qcom/sepolicy/sepolicy.mk
 
 # A/B device flags
 TARGET_NO_KERNEL := false
-#TARGET_NO_RECOVERY := true
-#BOARD_USES_RECOVERY_AS_BOOT := true
-#BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+TARGET_NO_RECOVERY := true
+BOARD_USES_RECOVERY_AS_BOOT := true
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 AB_OTA_UPDATER := true
 
 # Crypto
