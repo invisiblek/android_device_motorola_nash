@@ -36,7 +36,7 @@ on fs
     chmod 0664 /dev/ion
     chown system system /dev/ion
     setprop ro.hardware.bootctrl qcom
-    export LD_LIBRARY_PATH /sbin:/vendor/lib64:/vendor/lib64/hw
+    export LD_LIBRARY_PATH /sbin:/odm/lib64:/odm/lib64/hw:/vendor/lib64:/vendor/lib64/hw
     install_keyring
 
 # separate copy needed to use /sbin/linker64 instead of /system/bin/linker64
